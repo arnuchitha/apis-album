@@ -3,8 +3,7 @@ const app = express();
 const path = require('path');
 const dotenv = require('dotenv');
 var cors = require('cors');
-
-var port = process.env.PORT || 7777
+const verify = require('./core/verifyToken');
 
 app.use(cors()); 
 var bodyParser = require('body-parser')
@@ -16,25 +15,23 @@ dotenv.config();
 require('dotenv').config({path: path.join(__dirname, '.env')});
 global.ENV = process.env;
 global.PATHIMG = __dirname+'/public/images';
-const verify = require('./core/verifyToken');
+
 
 app.use(express.json());
 const pathname = process.env.VERSION;
-
 app.get(pathname+'/', (req, res) => {
-    res.send('Welcome to zegotravel apis executive');
+    console.log("in")
+    res.send('Welcome to zegotravel apis album');
 });
 
-// const mainRoute = require('./routes/mainRoute');
-// const userRoute = require('./routes/userRoute');
-// const dataReportRoute = require('./routes/reportRoute');
-// const countryRoute = require('./routes/countryRoute');
+const albumRoute = require('./routes/alubumRoute');
 
-// app.use(`${pathname}/main`, verify, mainRoute);
-// app.use(`${pathname}/user`, verify, userRoute);
-// app.use(`${pathname}/country`,verify,countryRoute);
-// app.use(`${pathname}/datacrystalreport`,dataReportRoute);
+app.use(`${pathname}/albumview`,verify,albumRoute);
+console.log(`${pathname}/albumview`)
+// app.listen(port, () => {
+//     console.log('Start server at port 3000.')
+// })
 
-// app.listen(process.env.PORT);
+app.listen(process.env.PORT);
 
 module.exports = app;

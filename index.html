@@ -1,0 +1,70 @@
+<html>
+    <title>Zego Travel Album</title>
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  </head>
+
+  <body >
+    <h2>Test</h2>
+
+<button onclick="testApisGet()">กด Test GET</button>
+<button onclick="testApisPost()">กด Test POST</button>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+<script>
+  const testApisGet = ()=>{
+    const _MYTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGJ1bUFwcFBhc3MiOiJ6ZWdvMDU4NDQifQ.g025PyFVH4IKVXAWpx2FQ-3u-o1t-GP0HPIZPtHfFpM";
+    const _URL = "http://192.168.2.21/ha/datacrystalreport/getreportvat";
+    axios.get(_URL, {headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'application/json','auth-token': _MYTOKEN}}).then((jsons)=> {
+        console.log(jsons.data);}
+        )
+  }
+
+  const testApisPost = ()=>{
+    const _MYTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGJ1bUFwcFBhc3MiOiJ6ZWdvMDU4NDQifQ.g025PyFVH4IKVXAWpx2FQ-3u-o1t-GP0HPIZPtHfFpM";
+    const _URL = "http://zegoapi.zego/ha/arquotation/create";
+    let objCustomer = {
+      
+    //   cusCode: "CM000001",
+    //   cusTax: "0105132155-121215",
+    //   cusNameLocal: "pee company",
+    //   cusNameGlobal: "pee company",
+    //   cusEmail: "ha@gmail.com",
+    //   cusPhone: "xxxxxx",
+    //   cusFax: "0001-0001-0001",
+    //   contactMain: "1001-1001-1001",
+    //   cusAccoutRoot: 0,
+    //   cusAccountInfo: "บางบัวทอง",
+    //   cusRegisteredAddress: "บางบัวทอง",
+    //   cusOfficeAddress: "วังทองหลาง",
+    //   cateCode:"AGC",
+    //   cusLegalType:"J",
+    //   countryID:1,
+    //   accountCode: "0001",
+    //   cusRefID: 1250,
+    //   cusRefCode: "ZT001",
+    //   cusBank: "KBANK",
+    //   cusBankAccount: "peeTAO",
+    //   cusBankNo: "123-456-7890",
+    //   cusOverview: "Hotel",
+    //   remark: "No Comment",
+    //   createBy: "peeTAO",
+    //   createDate: "31/10/2022",
+    //   updateBy: "peeTAO",
+    //   updateDate: "31/10/2022",
+    //   isDeleted: 1,
+    //   isVisible: 1,
+    //   isActived: "",
+        
+      };
+
+      let obj = JSON.stringify(objCustomer)
+        axios.post(_URL,obj,{ headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'application/json','auth-token': _MYTOKEN}}).then((jsons)=> {
+        console.log(jsons);}
+        )
+  }
+</script>
+</body>
+</html>
