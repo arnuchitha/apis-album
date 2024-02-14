@@ -14,6 +14,7 @@ const checkTokenCurrent = async (token) => {
 }  
 
 module.exports = async (req,res,next) => {
+    next();
     // const errCode = new mod_errorMessage();
     // const token = await getTokenFromHeaders(req);
     // if(!token) return res.status(401).send(errCode.errorMessageTo(false, 401,  'Unauthorized', 'Verify', 'Access Denied'));
