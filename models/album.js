@@ -91,6 +91,13 @@ class Album {
             if(!myFolderValue){
                 const folderPath = glob.sync(`${fromPath}${countryNameValue}/`);
                 await _fs.mkdir(`${folderPath}${cityNameValue}`); // สร้างแฟ้มในโฟลเดอร์ปัจจุบัน
+
+                const folderAuto = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/`);
+                if(folderAuto) {
+                    await _fs.mkdir(`${folderAuto}สถานที่ท่องเที่ยว`); // สร้างแฟ้มหลักอัตโนมัติ
+                    await _fs.mkdir(`${folderAuto}ร้านอาหาร`); // สร้างแฟ้มหลักอัตโนมัติ
+                    await _fs.mkdir(`${folderAuto}โรงแรม-ที่พัก`); // สร้างแฟ้มหลักอัตโนมัติ
+                }
             }
 
             
