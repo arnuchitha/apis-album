@@ -7,6 +7,11 @@ const path = require('path');
 const { fstat } = require('fs');
 const _fs = require('fs').promises;
 
+
+router.get(`/`, function (req, res, err) {
+    res.status(200).send("this is index");
+});
+
 // const uploadFileAlbum = (albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) => {
 
 //     const folderPath = `${process.env.PATH_CENTER_FILE}\\all-album\\${countryNameValue}\\${cityNameValue}\\${albumNameValue}\\${albumSetNameValue}`;
@@ -32,7 +37,7 @@ const _fs = require('fs').promises;
 //     });
 
 // };
-var fromPath = `${process.env.PATH_CENTER_FILE}\\all-album`;
+var fromPath = `${process.env.PATH_CENTER_FILE}`;
 
 var storage = multer.diskStorage({
     destination: function (request, file, callback) {
@@ -49,9 +54,7 @@ var storage = multer.diskStorage({
     }
 });
     
-router.get(`/`, function (req, res, err) {
-    res.status(200).send("this is index");
-});
+
 var upload = multer({ storage: storage });
 
 router.post(`/uploadAlbumSet`, upload.array('fileuploads'), function (req, res, err) {
@@ -69,8 +72,6 @@ router.post(`/albumSetForUpload`, function (req, res, err) {
     let fileAlbum = data.fileAlbum;
     let fileUpload = req.files;
 
-    console.log(fileAlbum);
-    console.log(fileUpload)
     // let result = uploadFileAlbum(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue)
 
     // let ab = new album();
@@ -138,7 +139,6 @@ router.get('/getFolderAlbumSet', async function (req, res) {
     res.status(200).send(result);
 });
 router.post('/createFolderCountry', async function (req, res) {
-    console.log(req.body);
     let data = req.body;
     let countryNameValue = data.countryName;
     

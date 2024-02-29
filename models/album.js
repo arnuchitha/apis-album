@@ -26,18 +26,18 @@ class Album {
     async createFolder(albumNameValue, countryNameValue, cityNameValue) {
 
         try {
-
-            const folderPathAll = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/*`);
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
+            const folderPathAll = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/*`);
             const myFolder = [];
             folderPathAll.forEach(file => {
-                let a = file.split(`/`, 4);
-                myFolder.push({albumName : a[3]});
+                let a = file.split(`/`, 5);
+                myFolder.push({albumName : a[4]});
             });
 
             let myFolderValue = _.some(myFolder, {albumName : albumNameValue})
 
             if(!myFolderValue){
-                const folderPath = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/`);
+                const folderPath = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/`);
             await _fs.mkdir(`${folderPath[0]}${albumNameValue}`); // สร้างแฟ้มในโฟลเดอร์ปัจจุบัน
             }    
 
@@ -56,8 +56,8 @@ class Album {
             const folderPathAll = glob.sync(`${fromPath}*`);
             const myFolder = [];
             folderPathAll.forEach(file => {
-                let a = file.split(`/`, 2);
-                myFolder.push({countryNameValue : a[1]});
+                let a = file.split(`/`, 3);
+                myFolder.push({countryNameValue : a[2]});
             });
 
             let myFolderValue = _.some(myFolder, {countryNameValue : countryNameValue})
@@ -78,18 +78,18 @@ class Album {
     async createFolderCity(countryNameValue, cityNameValue) {
 
         try {
-
-            const folderPathAll = glob.sync(`all-album/${countryNameValue}/*`);
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
+            const folderPathAll = glob.sync(`${fromPath}${countryNameValue}/*`);
             const myFolder = [];
             folderPathAll.forEach(file => {
-                let a = file.split(`/`, 3);
-                myFolder.push({cityName : a[2]});
+                let a = file.split(`/`, 4);
+                myFolder.push({cityName : a[3]});
             });
 
             let myFolderValue = _.some(myFolder, {cityName : cityNameValue})
 
             if(!myFolderValue){
-                const folderPath = glob.sync(`all-album/${countryNameValue}/`);
+                const folderPath = glob.sync(`${fromPath}${countryNameValue}/`);
                 await _fs.mkdir(`${folderPath}${cityNameValue}`); // สร้างแฟ้มในโฟลเดอร์ปัจจุบัน
             }
 
@@ -104,11 +104,12 @@ class Album {
     };
     async getFolderAlbum(countryNameValue, cityNameValue) {
         try {
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
             const myFolder = [];
-            const folderName = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/*`);
+            const folderName = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/*`);
             folderName.forEach(file => {
-                let a = file.split(`/`, 4);
-                myFolder.push({albumName : a[3]});
+                let a = file.split(`/`, 5);
+                myFolder.push({albumName : a[4]});
             });
             return myFolder;
             
@@ -120,12 +121,14 @@ class Album {
     };
     async getCountryList() {
         try {
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
             const myCountry = [];
-            const folderName = glob.sync(`all-album/*`);
+            const folderName = glob.sync(`${fromPath}*`);
             folderName.forEach(file => {
-                let a = file.split(`/`, 2);
-                myCountry.push({countryName: a[1]});
+                let a = file.split(`/`, 3);
+                myCountry.push({countryName: a[2]});
             });
+
             return myCountry;
             
         } catch (err) {
@@ -136,12 +139,12 @@ class Album {
     };
     async getCityList(countryNameValue) {
         try {
-
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
             const myCity = [];
-            const folderName = glob.sync(`all-album/${countryNameValue}/*`);
+            const folderName = glob.sync(`${fromPath}${countryNameValue}/*`);
             folderName.forEach(file => {
-                let a = file.split(`/`, 3);
-                myCity.push({cityName : a[2]});
+                let a = file.split(`/`, 4);
+                myCity.push({cityName : a[3]});
             });
             return myCity;
             
@@ -154,17 +157,17 @@ class Album {
     async createAlbumSet(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) {
 
         try {
-
-            const folderPathAll = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/${albumNameValue}/*`);
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
+            const folderPathAll = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/${albumNameValue}/*`);
             const myFolder = [];
             folderPathAll.forEach(file => {
-                let a = file.split(`/`, 5);
-                myFolder.push({albumSetName : a[4]});
+                let a = file.split(`/`, 6);
+                myFolder.push({albumSetName : a[5]});
             });
             let myFolderValue = _.some(myFolder, {albumSetName : albumSetNameValue})
 
             if(!myFolderValue){
-                const folderPath = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/${albumNameValue}/`);
+                const folderPath = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/${albumNameValue}/`);
                 await _fs.mkdir(`${folderPath[0]}${albumSetNameValue}`); // สร้างแฟ้มในโฟลเดอร์ปัจจุบัน
             }    
 
@@ -178,11 +181,12 @@ class Album {
     };
     async getFolderAlbumSet(albumNameValue, countryNameValue, cityNameValue) {
         try {
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
             const myFolder = [];
-            const folderName = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/${albumNameValue}/*`);
+            const folderName = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/${albumNameValue}/*`);
             folderName.forEach(file => {
-                let a = file.split(`/`, 5);
-                myFolder.push({albumSetName : a[4]});
+                let a = file.split(`/`, 6);
+                myFolder.push({albumSetName : a[5]});
             });
             return myFolder;
             
@@ -237,11 +241,12 @@ class Album {
     };
     async getAlbumPhoto(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) {
         try {
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
             const myFolder = [];
-            const folderName = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/*`);
+            const folderName = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/*`);
             folderName.forEach(file => {
-                let a = file.split(`/`, 6);
-                myFolder.push({albumFileName : a[5]});
+                let a = file.split(`/`, 7);
+                myFolder.push({albumFileName : a[6]});
             });
             return myFolder;
             
