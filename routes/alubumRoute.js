@@ -49,6 +49,9 @@ var storage = multer.diskStorage({
     }
 });
     
+router.get(`/`, function (req, res, err) {
+    res.status(200).send("this is index");
+});
 var upload = multer({ storage: storage });
 
 router.post(`/uploadAlbumSet`, upload.array('fileuploads'), function (req, res, err) {
