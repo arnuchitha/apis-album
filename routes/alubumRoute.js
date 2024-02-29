@@ -55,6 +55,7 @@ router.get(`/`, function (req, res, err) {
 var upload = multer({ storage: storage });
 
 router.post(`/uploadAlbumSet`, upload.array('fileuploads'), function (req, res, err) {
+
     res.status(200).send(req.files);
 });
 
@@ -79,14 +80,6 @@ router.post(`/albumSetForUpload`, function (req, res, err) {
     res.status(200).send(true);
 });
 
-
-
-
-router.get('/', async function (req, res) {
-    let ab = new album();
-    let result = await ab.getTest();
-    res.status(200).send(result);
-});
 
 router.post('/createFolder', async function (req, res) {
 
@@ -145,7 +138,7 @@ router.get('/getFolderAlbumSet', async function (req, res) {
     res.status(200).send(result);
 });
 router.post('/createFolderCountry', async function (req, res) {
-
+    console.log(req.body);
     let data = req.body;
     let countryNameValue = data.countryName;
     

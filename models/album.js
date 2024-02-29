@@ -52,8 +52,8 @@ class Album {
     async createFolderCountry(countryNameValue) {
 
         try {
-
-            const folderPathAll = glob.sync(`all-album/*`);
+            var fromPath = `${process.env.PATH_CENTER_FILE}`;
+            const folderPathAll = glob.sync(`${fromPath}*`);
             const myFolder = [];
             folderPathAll.forEach(file => {
                 let a = file.split(`/`, 2);
@@ -63,7 +63,7 @@ class Album {
             let myFolderValue = _.some(myFolder, {countryNameValue : countryNameValue})
 
             if(!myFolderValue){
-                const folderPath = glob.sync(`all-album/`);
+                const folderPath = glob.sync(`${fromPath}`);
                 await _fs.mkdir(`${folderPath}${countryNameValue}`); // สร้างแฟ้มในโฟลเดอร์ปัจจุบัน
             }
 
