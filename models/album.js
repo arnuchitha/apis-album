@@ -203,66 +203,23 @@ class Album {
         }
 
     };
-    uploadAlbumSet(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue, fileAlbum) {
-        try {
-
-            console.log(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue, fileAlbum);
-            // const storage = multer.diskStorage({
-            //     destination: function (req, file, cb) {
-            //         cb(null, 'uploads/');
-            //     },
-            //     filename: function (req, file, cb) {
-            //         cb(null, file.fieldname + '-' + Date.now());
-            //     },
-            // });
-
-            // const upload = multer({ storage: storage });
-
-            // // ใช้ glob เพื่อรวบรวมไฟล์ทั้งหมดในโฟลเดอร์ uploads
-            // glob('uploads/*', (err, files) => {
-            //     if (err) {
-            //     console.error(err);
-            //     return;
-            //     }
+    // async getAlbumPhoto(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) {
+    //     try {
+    //         var fromPath = `${process.env.PATH_CENTER_FILE}`;
+    //         const myFolder = [];
+    //         const folderName = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/*`);
+    //         folderName.forEach(file => {
+    //             let a = file.split(`/`, 7);
+    //             myFolder.push({albumFileName : a[6]});
+    //         });
+    //         return myFolder;
             
-            //     // ใช้ Multer middleware ในการจัดการอัปโหลดไฟล์
-            //     app.post('/upload', upload.array('myFiles', files.length), (req, res, next) => {
-            //     // req.files เก็บข้อมูลของไฟล์ที่อัปโหลด
-            //     res.send('Files uploaded successfully!');
-            //     });
-            // });
+    //     } catch (err) {
+    //         console.error(err);
+    //         res.status(500).send('Error getFolderAlbum');
+    //     }
 
-            // const myFolder = [];
-            // const folderName = glob.sync(`all-album/${countryNameValue}/${cityNameValue}/${albumNameValue}/*`);
-            // folderName.forEach(file => {
-            //     let a = file.split(`/`, 5);
-            //     myFolder.push({albumSetName : a[4]});
-            // });
-            // return myFolder;
-            
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Error getFolderAlbum');
-        }
-
-    };
-    async getAlbumPhoto(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) {
-        try {
-            var fromPath = `${process.env.PATH_CENTER_FILE}`;
-            const myFolder = [];
-            const folderName = glob.sync(`${fromPath}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/*`);
-            folderName.forEach(file => {
-                let a = file.split(`/`, 7);
-                myFolder.push({albumFileName : a[6]});
-            });
-            return myFolder;
-            
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Error getFolderAlbum');
-        }
-
-    };
+    // };
     
   }
   
