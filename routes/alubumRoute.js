@@ -138,16 +138,14 @@ router.get('/getAlbumPhoto', async function (req, res) {
     let cityNameValue = query.cityNameValue;
     let albumSetNameValue = query.albumSetNameValue;
 
-    var folderPath = `${process.env.PATH_CENTER_FILE}/${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/*.{jpg,png,gif}`;
-   
+    var folderPath = `${process.env.PATH_CENTER_FILE}/${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/*`;
     const myFile = [];
     const folderName = glob.sync(`${folderPath}`);
     folderName.forEach(file => {
         let a = file.split(`/`, 7);
-        myFile.push({albumFileName : a[6]});
+        myFile.push({albumFileName : a[6], albumFilePath : file});
     });
     res.status(200).send(myFile)
-
     // let ab = new album();
     // let result = await ab.getAlbumPhoto(albumNameValue,countryNameValue, cityNameValue, albumSetNameValue);
     // res.status(200).send(true);
