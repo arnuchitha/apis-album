@@ -14,7 +14,8 @@ router.get(`/`, function (req, res, err) {
 
 const uploadFileAlbum = (albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) => {
 
-    var folderPath = `${process.env.PATH_CENTER_FILE}/${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/`;
+    var folderPath = `${process.env.PATH_CENTER_FILE}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/`;
+    console.log(folderPath)
     var storage = multer.diskStorage({
         destination: function (request, file, callback) {
             //ปรับเป็น file .env ในภายหลังนะครับ
