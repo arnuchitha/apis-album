@@ -7,32 +7,38 @@ const path = require('path');
 const { fstat } = require('fs');
 const _fs = require('fs').promises;
 
+let dynamicDestination = `${process.env.PATH_CENTER_FILE}`; // กำหนดค่าเริ่มต้น
 
 router.get(`/`, function (req, res, err) {
     res.status(200).send("this is index");
 });
 
-const uploadFileAlbum = (albumNameValue, countryNameValue, cityNameValue, albumSetNameValue) => {
+const upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, dynamicDestination);
+      },
+      filename: (req, file, cb) => {
+        cb(null, file.originalname);
+      }
+    })
+}).array('fileuploads');
 
-    var folderPath = `${process.env.PATH_CENTER_FILE}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/`;
-    console.log(folderPath)
-    var storage = multer.diskStorage({
-        destination: function (request, file, callback) {
-            //ปรับเป็น file .env ในภายหลังนะครับ
-            callback(null, folderPath);
-        },
-        filename: function (request, file, callback) {
-            // กำหนดชื่อไฟล์มาเป็น originalname เลย
-            callback(null, file.originalname);
-        }
+const uploadFileAlbum = () => {
+    
+    router.post(`/uploadAlbumSet`, function (req, res, err) {
+        upload(req, res, (err) => {
+            if (err) {
+              return res.status(500).send(err.message);
+            }
+            // req.file จะถูกเพิ่มเข้ามาใน request
+            res.status(200).send(req.files);
+        });
     });
 
-    var upload = multer({ storage: storage });
+    
 
-    router.post(`/uploadAlbumSet`, upload.array('fileuploads'), function (req, res, err) {
-        res.status(200).send(req.files);
-    });
-
+    return true;
 };
 
 router.post(`/albumSetForUpload`, function (req, res, err) {
@@ -42,16 +48,11 @@ router.post(`/albumSetForUpload`, function (req, res, err) {
     let countryNameValue = data.countryName;
     let cityNameValue = data.cityName;
     let albumSetNameValue = data.albumSetName;
-    let fileAlbum = data.fileAlbum;
-    let fileUpload = req.files;
+    dynamicDestination = `${process.env.PATH_CENTER_FILE}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/`;
 
-    let result = uploadFileAlbum(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue)
-
-    // let ab = new album();
-
-    // let result = ab.uploadAlbumSet(albumNameValue, countryNameValue, cityNameValue, albumSetNameValue, fileAlbum, fileUpload);
+    uploadFileAlbum()
     
-    res.status(200).send(result);
+    res.status(200).send(dynamicDestination);
 });
 
 
