@@ -3,11 +3,10 @@ var router = express.Router();
 var multer = require('multer');
 const glob = require('glob');
 const album = require('../models/album');
-const path = require('path');
-const { fstat } = require('fs');
-const _fs = require('fs').promises;
+var moment = require('moment');
 
 let dynamicDestination = `${process.env.PATH_CENTER_FILE}`; // กำหนดค่าเริ่มต้น
+let fileNamelast = "";
 
 router.get(`/`, function (req, res, err) {
     res.status(200).send("this is index");
@@ -19,7 +18,7 @@ const upload = multer({
         cb(null, dynamicDestination);
       },
       filename: (req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, fileNamelast + '-' + moment(moment().toDate()).format('DDMMYY-HHmmss') + '-' + file.originalname);
       }
     })
 }).array('fileuploads');
@@ -49,6 +48,7 @@ router.post(`/albumSetForUpload`, function (req, res, err) {
     let cityNameValue = data.cityName;
     let albumSetNameValue = data.albumSetName;
     dynamicDestination = `${process.env.PATH_CENTER_FILE}${countryNameValue}/${cityNameValue}/${albumNameValue}/${albumSetNameValue}/`;
+    fileNamelast = albumSetNameValue;
 
     uploadFileAlbum()
     
