@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 const glob = require('glob');
+const path = require('path');
 const album = require('../models/album');
 var moment = require('moment');
 
@@ -18,25 +19,22 @@ const upload = multer({
         cb(null, dynamicDestination);
       },
       filename: (req, file, cb) => {
-        cb(null, fileNamelast + '-' + moment(moment().toDate()).format('DDMMYY-HHmmss') + '-' + file.originalname);
+
+        cb(null, fileNamelast + '-' + moment(moment().toDate()).format('DDMMYY-HHmmss') + path.extname(file.originalname));
+
       }
     })
 }).array('fileuploads');
 
 const uploadFileAlbum = () => {
-    
     router.post(`/uploadAlbumSet`, function (req, res, err) {
         upload(req, res, (err) => {
             if (err) {
               return res.status(500).send(err.message);
             }
-            // req.file จะถูกเพิ่มเข้ามาใน request
             res.status(200).send(req.files);
         });
     });
-
-    
-
     return true;
 };
 
