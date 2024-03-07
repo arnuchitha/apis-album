@@ -20,7 +20,8 @@ const upload = multer({
       },
       filename: (req, file, cb) => {
 
-        cb(null, fileNamelast + '-' + moment(moment().toDate()).format('DDMMYY-HHmmss') + path.extname(file.originalname));
+        const uniqueSuffix = `${Math.round(Math.random() * 1E3)}`.toString();
+        cb(null, fileNamelast + '-' + moment(moment().toDate()).format('DDMMYY-HHmmss')+ "-" + uniqueSuffix + path.extname(file.originalname));
 
       }
     })
