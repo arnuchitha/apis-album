@@ -39,8 +39,4 @@ app.use(`${pathname}/albumview`,verify,albumRoute);
 
 app.listen(process.env.PORT);
 
-
-
-
-
 module.exports = app;
